@@ -1,0 +1,81 @@
+<div class="max-w-5xl m-auto relative overflow-x-auto my-[2rem]">
+  <div class="grid grid-cols-2 my-5">
+    <div>
+      <input
+        [(ngModel)]="filterString"
+        value=""
+        placeholder="Buscar..."
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        type="text"
+      />
+    </div>
+    <div class="flex justify-end">
+      <a [routerLink]="['/client/create']">
+        <button
+          class="shadow bg-blue-700 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-3 px-5 rounded"
+        >
+          Crear
+        </button>
+      </a>
+    </div>
+  </div>
+  <table
+    class="w-full text-sm text-left text-gray-500 dark:text-gray-400 shadow-md sm:rounded-lg"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Nombre</th>
+        <th scope="col" class="px-6 py-3">Apellido Paterno</th>
+        <th scope="col" class="px-6 py-3">Apellido Materno</th>
+        <th scope="col" class="px-6 py-3">Número de Documento</th>
+        <th scope="col" class="px-6 py-3">Sexo</th>
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Edit</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let client of clients | filter: filterString"
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+      >
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+        >
+          {{ client.name }}
+        </th>
+        <td class="px-6 py-4">{{ client.lastname_father }}</td>
+        <td class="px-6 py-4">
+          {{ client.lastname_mother }}
+        </td>
+        <td class="px-6 py-4">
+          {{ client.document_number }}
+        </td>
+        <td class="px-6 py-4">
+          {{ client.gender }}
+        </td>
+        <td class="px-6 py-4 text-right">
+          <span
+            class="font-medium mr-3 text-gray-600 dark:text-blue-500 hover:underline"
+          >
+            <fa-icon
+              [icon]="faPen"
+              [routerLink]="['/client/edit', client.id]"
+            ></fa-icon>
+          </span>
+          <span
+            class="font-medium text-gray-600 dark:text-blue-500 hover:underline"
+          >
+            <fa-icon
+              [icon]="faTrash"
+              (click)="deleteClient(client.id ?? '')"
+            ></fa-icon>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
